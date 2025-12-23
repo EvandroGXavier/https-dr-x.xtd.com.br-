@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sistema Jurídico DR. ADV - Design System
+Cores profissionais para plataforma jurídica
+Todas as cores em HSL para máxima flexibilidade
+*/
+
+@layer base {
+  :root {
+    /* Cores base */
+    --background: 0 0% 100%;
+    --foreground: 225 15% 15%;
+
+    /* Cards e superfícies */
+    --card: 0 0% 100%;
+    --card-foreground: 225 15% 15%;
+    --card-elevated: 220 20% 98%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 15% 15%;
+
+    /* Azul jurídico profissional */
+    --primary: 220 91% 24%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 91% 20%;
+    --primary-light: 220 60% 95%;
+
+    /* Cores secundárias */
+    --secondary: 220 13% 95%;
+    --secondary-foreground: 225 15% 15%;
+    --secondary-hover: 220 13% 90%;
+
+    /* Neutros */
+    --muted: 220 13% 95%;
+    --muted-foreground: 225 7% 55%;
+
+    /* Accent dourado/amarelo para destaques */
+    --accent: 45 93% 47%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 45 93% 95%;
+
+    /* Estados */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Bordas e inputs */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 91% 24%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Tema escuro profissional */
+    --background: 225 25% 8%;
+    --foreground: 220 20% 95%;
+
+    --card: 225 25% 10%;
+    --card-foreground: 220 20% 95%;
+    --card-elevated: 225 25% 12%;
+
+    --popover: 225 25% 10%;
+    --popover-foreground: 220 20% 95%;
+
+    --primary: 220 91% 55%;
+    --primary-foreground: 225 25% 8%;
+    --primary-hover: 220 91% 50%;
+    --primary-light: 220 60% 15%;
+
+    --secondary: 225 20% 15%;
+    --secondary-foreground: 220 20% 95%;
+    --secondary-hover: 225 20% 20%;
+
+    --muted: 225 20% 15%;
+    --muted-foreground: 220 10% 65%;
+
+    --accent: 45 93% 47%;
+    --accent-foreground: 225 25% 8%;
+    --accent-light: 45 93% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 220 20% 95%;
+    --success: 142 71% 45%;
+    --success-foreground: 220 20% 95%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 225 25% 8%;
+
+    --border: 225 20% 20%;
+    --input: 225 20% 20%;
+    --ring: 220 91% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Gradientes para elementos premium */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-hover)));
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--warning)));
+  }
+
+  .gradient-card {
+    background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--card-elevated)));
+  }
+
+  /* Sombras profissionais */
+  .shadow-soft {
+    box-shadow: 0 2px 8px -2px hsl(var(--primary) / 0.1);
+  }
+
+  .shadow-elegant {
+    box-shadow: 0 8px 32px -8px hsl(var(--primary) / 0.15);
+  }
+
+  .shadow-premium {
+    box-shadow: 0 16px 48px -12px hsl(var(--primary) / 0.25);
+  }
+
+  /* Animações suaves */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-bounce {
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}

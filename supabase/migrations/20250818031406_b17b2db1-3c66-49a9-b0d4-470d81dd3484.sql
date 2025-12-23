@@ -1,0 +1,20 @@
+-- Add missing fields for complete CNPJ data (Pessoa Jurídica)
+ALTER TABLE public.contatos 
+ADD COLUMN situacao_cadastral text,
+ADD COLUMN data_abertura date,
+ADD COLUMN porte_empresa text,
+ADD COLUMN natureza_juridica text,
+ADD COLUMN cnae_principal text,
+ADD COLUMN cnae_secundarias text,
+ADD COLUMN capital_social numeric,
+ADD COLUMN tipo_logradouro text,
+ADD COLUMN motivo_situacao_cadastral text,
+ADD COLUMN data_situacao_cadastral date,
+ADD COLUMN municipio_ibge text,
+ADD COLUMN ddd_telefone_1 text,
+ADD COLUMN ddd_telefone_2 text,
+ADD COLUMN ddd_fax text,
+ADD COLUMN qualificacao_responsavel text,
+ADD COLUMN identificador_matriz_filial text,
+ADD COLUMN situacao_especial text,
+ADD COLUMN data_situacao_especial date;

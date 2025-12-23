@@ -1,0 +1,365 @@
+Perfeito! Abaixo estão:
+
+1. **Arquivos `.md` prontos** (conteúdo completo) — é só **copiar e salvar** no seu repositório (recomendo a pasta `/docs/`).
+2. **Prompt compacto** para você **colar nas Instruções do GPT/Lovable**.
+
+Se quiser baixar como zip, basta salvar os arquivos com estes nomes e zipar a pasta `/docs/`.
+
+---
+
+# 1) Estrutura sugerida
+
+```
+/docs
+  ARCHITECTURE.md
+  AI_PIPELINE.md
+  CHANGELOG.md
+  FRONTEND_GUIDE.md
+  PROMPT_MASTER_MINI.md
+  RBAC_MODEL.md
+  RELEASE_ROLLBACK.md
+  RLS_POLICIES.md
+  SCHEMA_PLAYBOOK.md
+  SECURITY_CHECKLIST.md
+  SYSTEM_STATE.md
+  TEST_PLAN.md
+```
+
+---
+
+# 2) Arquivos `.md` (copie e salve)
+
+## `/docs/SYSTEM_STATE.md`
+
+```md
+# SYSTEM_STATE — XTD ERP Jurídico (fonte única de verdade)
+
+> Atualize SEMPRE que uma decisão arquitetural ou de produto for tomada. Mantenha curto e objetivo.
+
+## 1) Contexto do Produto
+- Tipo: SaaS jurídico multi-tenant (multiempresa/multifilial)
+- Público: escritórios de advocacia (expansível a outros segmentos)
+- Idioma padrão: **PT-BR** (tabelas, campos, rótulos, mensagens, docs)
+
+## 2) Stack
+- Frontend: React + TypeScript + Vite + Tailwind + shadcn/ui (Radix)
+- Backend/Dados: **Supabase** (preferencial) e/ou Laravel/MariaDB quando indicado
+- Integrações: WhatsApp, IA (OCR/Extração/Classificação), Financeiro, Documentos
+
+## 3) Módulos (estáveis, não quebrar)
+- Perfis, Contatos, Etiquetas, Documentos/Modelos, Financeiro (Transações/Contas)
+
+## 4) Decisões Arquiteturais Vigentes
+- Composição: **NÃO editar** `components/layout/*` e `components/ui/*` (usar wrappers/adapters)
+- RLS por tenant: políticas separadas **SELECT/INSERT/UPDATE/DELETE** via `current_setting('app.tenant_id', true)::uuid`
+- RBAC por papel: Admin / Advogado / Cliente
+- Auditoria: evento mínimo `{actorId, tenantId, action, module, targetId?, timestamp, extra?}`
+- Feature flags: novidades via `FEATURE_*_V1`
+- Fluxo **Upload-e-Pronto**: validar → OCR/extração → mapping → dedupe → anexar/criar → autopreencher → auditar
+
+## 5) Itens com Versões/Estados
+- Schema atual: v0 (data: preencher) – ver `SCHEMA_PLAYBOOK.md`
+- Rotas & componentes: v0 – ver `FRONTEND_GUIDE.md`
+- RBAC: v0 – ver `RBAC_MODEL.md`
+- Pipeline IA: v0 – ver `AI_PIPELINE.md`
+
+## 6) Duplicidades / Adapters Necessários
+- Contatos: `contatos` × `contatos_v2` → **Adapter**/View para padronizar consumo
+- WhatsApp: `wa_*` × `whatsapp_*` → **Adapter**/View de unificação
+- Anexos: checar migrações vs cache de schema (ver `SCHEMA_PLAYBOOK.md`)
+
+## 7) Flags Ativas
+- PROCESSOS_V1: on/off
+- HONORARIOS_V1: on/off
+- AGENDA_V1: on/off
+- TAREFAS_V1: on/off
+- NOTAS_V1: on/off
+
+## 8) Riscos & Pendências
+- [ ] Normalizar “anexos” (migrar/ajustar/adapter)
+- [ ] Consolidar WhatsApp (wa_* vs whatsapp_*)
+- [ ] Definir núcleo único de Contatos (adapter v1/v2)
+
+## 9) Histórico (resumo)
+- v0 – (AAAA-MM-DD) – Base de governança criada; itens sensíveis mapeados
+```
+
+---
+
+## `/docs/CHANGELOG.md`
+
+```md
+# CHANGELOG — XTD ERP Jurídico
+> Registre **entradas curtas** por mudança. Uma linha por item.
+
+## [v0] - AAAA-MM-DD
+- Diagnóstico inicial concluído (Schema mapeado, duplicidades identificadas)
+- Adicionados arquivos de governança (`SYSTEM_STATE.md`, playbooks e guias)
+- Planejado adapter Contatos v1/v2 e unificação WhatsApp
+```
+
+---
+
+## `/docs/ARCHITECTURE.md`
+
+```md
+# ARCHITECTURE — visão geral
+
+## Objetivos
+- Segurança multi-tenant (RLS + RBAC)
+- Eficiência operacional (menos cliques)
+- IA proativa (OCR/extração/classificação/autopreenchimento)
+- Composição de UI (shadcn/ui) sem tocar primitives/layouts
+
+## Camadas
+- FE: SPA React + TypeScript (Vite, Tailwind, shadcn/ui)
+- API/Dados: Supabase (RPC, RLS, Policies) + (opcional) serviços Laravel
+- Integrações: WhatsApp, OCR/IA, Financeiro, Documentos
+
+## Contratos públicos (estáveis)
+- Tipos TS em `src/types/*`
+- Hooks compartilhados em `src/hooks/*`
+- Endpoints/shapes consumidos por páginas já prontas
+```
+
+---
+
+## `/docs/SCHEMA_PLAYBOOK.md`
+
+```md
+# SCHEMA PLAYBOOK — migrações e compatibilidade
+
+## Princípios
+- Evolutivo e NÃO destrutivo: `CREATE/ALTER` apenas, sem `DROP`
+- Sempre incluir: `tenant_id`, `created_at`, `updated_at`
+- Índices/constraints/FKs explícitos
+- Políticas RLS **separadas** (SELECT/INSERT/UPDATE/DELETE)
+- Triggers de auditoria quando aplicável
+- Nomear arquivos de migração com prefixo de data e ordem
+
+## Roteiro de migração
+1) Planejar DDL (com rollback)
+2) Criar políticas RLS (separadas)
+3) Popular dados mínimos (quando preciso)
+4) Validar FKs/índices/visões/adapters
+5) Executar smoke queries
+6) Atualizar `SYSTEM_STATE.md` + `CHANGELOG.md`
+
+## Tópicos sensíveis atuais
+- **Anexos**: alinhar tabelas/migrações e cache de schema
+- **Adapters**: Contatos (v1/v2) e WhatsApp (wa_*/whatsapp_*)
+```
+
+---
+
+## `/docs/RLS_POLICIES.md`
+
+````md
+# RLS POLICIES — snippets prontos (Supabase)
+> Pré-requisito: `app.tenant_id` definido (claim JWT ou `set_config` na sessão).
+
+```sql
+alter table public.<tabela> enable row level security;
+
+create policy "select_by_tenant" on public.<tabela>
+for select using (tenant_id = current_setting('app.tenant_id', true)::uuid);
+
+create policy "insert_by_tenant" on public.<tabela>
+for insert with check (tenant_id = current_setting('app.tenant_id', true)::uuid);
+
+create policy "update_by_tenant" on public.<tabela>
+for update using (tenant_id = current_setting('app.tenant_id', true)::uuid)
+with check (tenant_id = current_setting('app.tenant_id', true)::uuid);
+
+create policy "delete_by_tenant" on public.<tabela>
+for delete using (tenant_id = current_setting('app.tenant_id', true)::uuid);
+````
+
+## Boas práticas
+
+* Separar políticas por operação
+* Testar com diferentes tenants e papéis
+
+````
+
+---
+
+## `/docs/RBAC_MODEL.md`
+```md
+# RBAC MODEL — papéis e capacidades
+
+## Papéis
+- **Admin**: acesso total ao tenant, configurações, aprovações
+- **Advogado**: acesso operacional aos módulos (conforme permissões)
+- **Cliente**: acesso controlado (portais, leitura limitada, envio de docs)
+
+## Guardas (UI)
+- Renderização condicional por papel; desabilitar ações sem permissão
+- Informar o motivo (tooltip/aria-descr) quando bloqueado
+
+## Server-side
+- RLS e/ou checagens no endpoint (se houver camada API)
+- Auditoria em toda mutação de estado
+
+## Bloqueios de estado
+- Ex.: `honorarios.status = 'aprovado'`
+  - UI read-only
+  - UPDATE negado por política
+````
+
+---
+
+## `/docs/AI_PIPELINE.md`
+
+```md
+# AI PIPELINE — Upload-e-Pronto e automações
+
+## Objetivo
+Reduzir cliques e erros: ingestão inteligente com OCR/extração/classificação/autopreenchimento.
+
+## Fluxo (end-to-end)
+1) **Validação** do upload (MIME/tamanho; antivírus opcional)
+2) **OCR/Extração** → criar job em `aid_jobs`
+3) **Mapping declarativo** (`aid_mappings`: origem → destino)
+4) **Dedupe** (CPF/CNPJ/Nº processo) para anexar vs criar novo
+5) **Autopreenchimento** (gravar em `aid_results` e persistir no módulo)
+6) **Auditoria** (evento com `actorId`, `tenantId`, `module`, `targetId`)
+7) **UX**: toasts, retry, estados de loading/erro/empty
+
+## Contratos (Types/Interfaces)
+- `AidJob`, `AidResult`, `AidMapping` (detalhar em `src/types/aid.ts`)
+
+## Observabilidade
+- Logs dos jobs, métricas simples (tempo médio, taxa de acerto)
+```
+
+---
+
+## `/docs/FRONTEND_GUIDE.md`
+
+```md
+# FRONTEND GUIDE — rotas, composição e UX
+
+## Padrão de rotas por módulo
+- `/modulo` → lista + filtros + paginação
+- `/modulo/novo` → formulário de criação
+- `/modulo/[id]` → detalhe + abas/ações
+
+## Composição (importante)
+- **Não editar** `components/layout/*` e `components/ui/*`
+- Reutilizar base shadcn/ui; criar wrappers/adapters em `components/<modulo>/*`
+- Validar com **zod** + máscaras (CPF/CNPJ/CEP)
+- Estados: loading/erro/empty; skeletons; toasts
+- A11y: foco/aria/contraste/navegação por teclado
+- **Feature flags** para expor novidades
+
+## Adapters (duplicidades)
+- `contatos` × `contatos_v2` → component adapter + TS types
+- `wa_*` × `whatsapp_*` → service adapter
+```
+
+---
+
+## `/docs/SECURITY_CHECKLIST.md`
+
+```md
+# SECURITY CHECKLIST — incluir SEMPRE em entregas
+
+- [ ] RLS por `tenant_id` (SELECT/INSERT/UPDATE/DELETE)
+- [ ] RBAC aplicado (app + políticas)
+- [ ] Auditoria (actor/action/target/module/tenant/timestamp)
+- [ ] Uploads validados (MIME/tamanho; antivírus se houver)
+- [ ] Bloqueio pós-aprovação (ex.: honorários/contratos)
+- [ ] A11y (foco/aria/contraste/teclado)
+- [ ] UI consistente (shadcn/ui)
+- [ ] Logs & tratamento de erros (toasts + fallback)
+```
+
+---
+
+## `/docs/TEST_PLAN.md`
+
+```md
+# TEST PLAN — por papel e módulo
+
+## Papéis
+- Admin / Advogado / Cliente
+
+## Módulos mínimos
+- Processos, Agenda, Tarefas, Honorários, Notas, Contatos, Documentos
+
+## Roteiro (exemplo por módulo)
+1) Listagem: filtros/paginação por tenant
+2) CRUD: validações (zod/máscaras), erros e toasts
+3) RBAC: ações permitidas vs bloqueadas por papel
+4) RLS: garantir isolamento por tenant (testes cruzados)
+5) Upload-e-Pronto: validar → OCR → mapping → dedupe → autopreencher → auditar
+6) Auditoria: eventos gerados nas mutações
+7) Estados: loading/erro/empty; acessibilidade (foco/aria)
+
+## Smoke pós-deploy
+- Rotas abrem?
+- Flags corretas?
+- RLS ativa?
+- Upload básico funcional?
+```
+
+---
+
+## `/docs/RELEASE_ROLLBACK.md`
+
+```md
+# RELEASE & ROLLBACK — rollout seguro
+
+## Release (via Feature Flags)
+1) Habilitar flag por tenant/grupo piloto
+2) Monitorar logs e métricas (erros, latência, jobs IA)
+3) Expandir gradualmente
+
+## Rollback
+- Desativar flags de módulos/funcionalidades
+- Reverter migrações (DDL reversa)
+- Reverter commit(s) associados
+
+## Critérios de aceite
+- Testes por papel OK
+- Checklist de Segurança 100% ok
+- Sem regressões nos módulos estáveis
+```
+
+---
+
+## `/docs/PROMPT_MASTER_MINI.md`
+
+```md
+# PROMPT MASTER (mini) — para colar nas Instruções do ChatGPT/Lovable
+
+Você é Especialista em Lovable.dev no **XTD ERP Jurídico** (SaaS multi-tenant).
+Meta: gerar **prompts e diffs** para correção/criação de módulos **sem quebrar** o existente.
+Idioma: **PT-BR** para tudo.
+
+Guardrails:
+- Não editar `components/layout/*` e `components/ui/*` (usar composição/wrappers)
+- Feature flags p/ novidades (`FEATURE_*_V1`)
+- Segurança: RLS por tenant, RBAC por papel, auditoria, bloqueio pós-aprovação, uploads validados
+- A11y + consistência shadcn/ui
+
+Etapas:
+- **Passo 0 – Diagnóstico (não alterar)**: mapear Schema/Rotas/Hooks/Types/duplicidades (Contatos v1/v2; WhatsApp wa_* vs whatsapp_*), riscos
+- **Schema** (evolutivo): `CREATE/ALTER` + RLS separada + triggers de auditoria + rollback
+- **Front**: rotas `/modulo`, `/modulo/novo`, `/modulo/[id]`; zod/máscaras; toasts/skeletons/a11y; composição
+- **IA/Upload-e-Pronto**: validar → OCR → mapping → dedupe → anexar/criar → autopreencher → auditar
+- **Entrega**: Contexto/Tarefa/Plano; Impacto; Schema+RLS; Rotas/Componentes; **diff-first**; Testes por papel; Rollback; Checklist Segurança
+- Atualizar `SYSTEM_STATE.md` e `CHANGELOG.md` a cada iteração
+```
+
+---
+
+# 3) Prompt para anexar nas Instruções do GPT/Lovable
+
+Cole **exatamente** o conteúdo do arquivo **`/docs/PROMPT_MASTER_MINI.md`** nas Instruções do projeto do ChatGPT/Lovable.
+
+Se as Instruções tiverem limite, use apenas esta versão **mini** (ela cabe) e, durante a conversa, chame os arquivos quando precisar (ex.: “Consulte `RLS_POLICIES.md` para gerar as políticas”, “Siga o roteiro de `SCHEMA_PLAYBOOK.md`”, etc.).
+
+---
+

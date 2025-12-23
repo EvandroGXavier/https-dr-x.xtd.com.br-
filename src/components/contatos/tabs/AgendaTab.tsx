@@ -1,0 +1,30 @@
+import { ContatoCompleto } from '@/types/contatos';
+import AgendaLink from '@/components/contatos/AgendaLink';
+import { FEATURES } from '@/config/features';
+
+interface AgendaTabProps {
+  contato: ContatoCompleto;
+  onUpdate: (contato: ContatoCompleto) => void;
+  isEditing?: boolean;
+}
+
+export function AgendaTab({ contato }: AgendaTabProps) {
+  return (
+    <div className="p-4 space-y-4">
+      <h3 className="text-lg font-semibold mb-4">Agenda</h3>
+      <p className="text-muted-foreground">
+        Componente de agenda (somente leitura) em desenvolvimento...
+      </p>
+      
+      {FEATURES.LINK_AGENDA_EM_CONTATOS && (
+        <div className="pt-4 border-t">
+          <AgendaLink
+            contatoId={contato?.id}
+            disabled={!contato?.id}
+            className="justify-end"
+          />
+        </div>
+      )}
+    </div>
+  );
+}

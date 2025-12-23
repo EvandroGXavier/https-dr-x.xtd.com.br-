@@ -1,0 +1,4 @@
+/* src/styles/textbox.css */
+.textbox-node .rnd-resizable { overflow: visible; }
+.textbox-node [data-textbox-content] { min-height: 24px; }
+@media print { .textbox-node { break-inside: avoid; } }

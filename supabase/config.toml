@@ -1,0 +1,97 @@
+project_id = "dkibtutruybxpdmjicjg"
+
+[functions.backup-database]
+verify_jwt = true
+
+[functions.restore-database]
+verify_jwt = true
+
+[functions.wa-webhook]
+verify_jwt = false
+
+[functions.wa-evolution-webhook]
+verify_jwt = false
+
+[functions.wa-outbox-worker]
+verify_jwt = false
+
+[functions.wa-send-message]
+verify_jwt = true
+
+[functions.wa-sync-templates]
+verify_jwt = true
+
+[functions.whatsapp-evolution]
+verify_jwt = true
+
+[functions.test-whatsapp-connection]
+verify_jwt = true
+
+[functions.consultar-cep]
+verify_jwt = false
+
+[functions.wa-healthcheck]
+verify_jwt = false
+
+[functions.wa-dispatcher]
+verify_jwt = false
+
+[functions.wa-refresh-media-url]
+verify_jwt = true
+
+[functions.consultar-cnpj]
+verify_jwt = false
+
+[functions.wa-mark-read]
+verify_jwt = true
+
+[functions.whatsapp-send-message]
+verify_jwt = true
+
+[functions.whatsapp-accounts]
+verify_jwt = true
+
+[functions.send-email]
+verify_jwt = true
+
+[functions.send-email-retry]
+verify_jwt = true
+
+[functions.test-smtp]
+verify_jwt = true
+
+[functions.processar-nfe]
+verify_jwt = true
+
+[functions.gerar-documento-ia]
+verify_jwt = true
+
+[functions.analisar-documento-ia]
+verify_jwt = true
+
+[functions.processo-ocr]
+verify_jwt = true
+
+[functions.aid-process]
+verify_jwt = true
+
+[functions.anexo-processor]
+verify_jwt = true
+
+[functions.telefonia-nova-chamada]
+verify_jwt = true
+
+[functions.telefonia-atualizar-chamada]
+verify_jwt = true
+
+[functions.telefonia-buscar-contato]
+verify_jwt = true
+
+[functions.async-security-monitor]
+verify_jwt = false
+
+[functions.cleanup-storage]
+verify_jwt = true
+
+[functions.emergency-cleanup]
+verify_jwt = false
