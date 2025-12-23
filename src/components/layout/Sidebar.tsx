@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  BarChart3, 
-  Calendar, 
-  FileText, 
-  Gavel, 
-  Home, 
-  Users, 
+import {
+  BarChart3,
+  Calendar,
+  FileText,
+  Gavel,
+  Home,
+  Users,
   DollarSign,
   Archive,
   ChevronLeft,
@@ -61,7 +61,7 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
 
   // Close mobile sidebar when route changes
   useEffect(() => {
-    if (onClose && isMobile) {
+    if (onClose && showDrawer) {
       onClose();
     }
   }, [location.pathname, isMobile, onClose]);
@@ -148,8 +148,10 @@ export const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
     </div>
   );
 
-  // Handle mobile sidebar
-  if (isMobile) {
+  // Handle mobile and tablet sidebar (anything below lg)
+  const showDrawer = typeof window !== 'undefined' ? window.innerWidth < 1024 : isMobile;
+
+  if (showDrawer) {
     return (
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent side="left" className="w-72 p-0">

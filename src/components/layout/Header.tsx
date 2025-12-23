@@ -37,11 +37,9 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
     <header className="border-b bg-card/50 backdrop-blur-sm shadow-soft sticky top-0 z-50">
       <div className="flex h-16 items-center px-4 lg:px-6 gap-2 sm:gap-4 lg:gap-6">
         {/* Mobile menu button */}
-        {isMobile && (
-          <Button variant="ghost" size="icon" onClick={onMenuClick} className="lg:hidden flex-shrink-0">
-            <Menu className="h-5 w-5" />
-          </Button>
-        )}
+        <Button variant="ghost" size="icon" onClick={onMenuClick} className="lg:hidden flex-shrink-0">
+          <Menu className="h-5 w-5" />
+        </Button>
 
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
