@@ -274,7 +274,7 @@ const Auth = () => {
   // Se usuário acabou de se cadastrar, mostrar wizard
   if (showWizard && newUser) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50/30 to-background flex items-center justify-center p-4">
         <CadastroEmpresaWizard user={newUser} onSuccess={handleWizardSuccess} />
       </div>
     );
@@ -282,7 +282,7 @@ const Auth = () => {
 
   if (showForgotPassword) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50/30 to-background flex items-center justify-center p-4">
         <Card className="w-full max-w-md shadow-xl border-border/50">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold text-foreground">Recuperar Senha</CardTitle>
@@ -338,7 +338,7 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50/30 to-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl border-border/50">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-foreground">DR. ADV</CardTitle>
