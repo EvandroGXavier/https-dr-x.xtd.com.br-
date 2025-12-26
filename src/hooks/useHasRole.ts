@@ -25,33 +25,57 @@ export function useHasRole(
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function checkRole() {
+      // Se não houver sessão ativa, não adianta verificar role
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        if (isMounted) {
+          setHasRole(false);
+          setLoading(false);
+        }
+        return;
+      }
+
       try {
-        setLoading(true);
-        setError(null);
+        if (isMounted) {
+          setLoading(true);
+          setError(null);
+        }
 
         const { data, error: rpcError } = await supabase.rpc('has_role', {
           _role: role as 'admin' | 'user',
         });
 
-        if (rpcError) {
-          console.error('Erro ao verificar papel:', rpcError);
-          setError(rpcError.message);
-          setHasRole(false);
-        } else {
-          setHasRole(Boolean(data));
+        if (isMounted) {
+          if (rpcError) {
+            console.error('Erro ao verificar papel:', rpcError);
+            setError(rpcError.message);
+            setHasRole(false);
+          } else {
+            setHasRole(Boolean(data));
+          }
         }
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
-        console.error('Erro ao verificar papel:', err);
-        setError(errorMessage);
-        setHasRole(false);
+        if (isMounted) {
+          const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido';
+          console.error('Erro ao verificar papel:', err);
+          setError(errorMessage);
+          setHasRole(false);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
     checkRole();
+
+    return () => {
+      isMounted = false;
+    };
   }, [role, empresaUuid, filialUuid]);
 
   return { hasRole, loading, error };

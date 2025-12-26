@@ -73,290 +73,288 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   useDefaultTags(); // Criar etiquetas padrão automaticamente
-  
+
   return (
-    <BrowserRouter>
-      <AppWithRouter />
-    </BrowserRouter>
+    <AppWithRouter />
   );
 };
 
 const AppWithRouter = () => {
   useGlobalF1(); // Hook global para F1 abrir ajuda (dentro do Router)
-  
+
   return (
     <>
       <GlobalContactHotkey />
       <Routes>
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
-            <Route path="/configuracao-inicial" element={
-              <ProtectedRoute>
-                <ConfiguracaoInicial />
-              </ProtectedRoute>
-            } />
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Index />
-              </ProtectedRoute>
-            } />
-            <Route path="/contatos" element={
-              <ProtectedRoute>
-                <Contatos />
-              </ProtectedRoute>
-            } />
-            <Route path="/contatos/novo" element={
-              <ProtectedRoute>
-                <ContatoNovo />
-              </ProtectedRoute>
-            } />
-            <Route path="/contatos/:id" element={
-              <ProtectedRoute>
-                <ContatoDetalhes />
-              </ProtectedRoute>
-            } />
-            <Route path="/contatos/:id/editar" element={
-              <ProtectedRoute>
-                <ContatoEditar />
-              </ProtectedRoute>
-            } />
-            <Route path="/etiquetas" element={
-              <ProtectedRoute>
-                <Etiquetas />
-              </ProtectedRoute>
-            } />
-            <Route path="/agenda" element={
-              <ProtectedRoute>
-                <Agenda />
-              </ProtectedRoute>
-            } />
-            <Route path="/agenda/v2/novo" element={
-              <ProtectedRoute>
-                <AgendaFormV2 />
-              </ProtectedRoute>
-            } />
-            <Route path="/agenda/v2/:id" element={
-              <ProtectedRoute>
-                <AgendaFormV2 />
-              </ProtectedRoute>
-            } />
-            <Route path="/agenda/config" element={
-              <ProtectedRoute>
-                <AgendaConfig />
-              </ProtectedRoute>
-            } />
-            <Route path="/configuracoes" element={
-              <ProtectedRoute>
-                <Configuracoes />
-              </ProtectedRoute>
-            } />
-            <Route path="/financeiro" element={
-              <ProtectedRoute>
-                <Financeiro />
-              </ProtectedRoute>
-            } />
-            <Route path="/financeiro/contas" element={
-              <ProtectedRoute>
-                <ContasFinanceiras />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos" element={
-              <ProtectedRoute>
-                <Processos />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/funil" element={
-              <ProtectedRoute>
-                <FunilAtendimento />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/captura" element={
-              <ProtectedRoute>
-                <ProcessoCaptura />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/novo" element={
-              <ProtectedRoute>
-                <ProcessoForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/:id/editar" element={
-              <ProtectedRoute>
-                <ProcessoForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/:id" element={
-              <ProtectedRoute>
-                <ProcessoDetalhes />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/configuracoes" element={
-              <ProtectedRoute>
-                <ProcessoConfiguracoes />
-              </ProtectedRoute>
-            } />
-            <Route path="/processos/configuracoes" element={
-              <ProtectedRoute>
-                <ProcessoConfig />
-              </ProtectedRoute>
-            } />
-            <Route path="/whatsapp" element={
-              <ProtectedRoute>
-                <WhatsAppMenu />
-              </ProtectedRoute>
-            } />
-            <Route path="/telefonia" element={
-              <ProtectedRoute>
-                <Telefonia />
-              </ProtectedRoute>
-            } />
-            {/* WhatsApp Evolution removido - usando sistema novo */}
-            <Route path="/biblioteca/*" element={
-              <ProtectedRoute>
-                <Biblioteca />
-              </ProtectedRoute>
-            } />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+        <Route path="/configuracao-inicial" element={
+          <ProtectedRoute>
+            <ConfiguracaoInicial />
+          </ProtectedRoute>
+        } />
+        <Route path="/" element={
+          <ProtectedRoute>
+            <Index />
+          </ProtectedRoute>
+        } />
+        <Route path="/contatos" element={
+          <ProtectedRoute>
+            <Contatos />
+          </ProtectedRoute>
+        } />
+        <Route path="/contatos/novo" element={
+          <ProtectedRoute>
+            <ContatoNovo />
+          </ProtectedRoute>
+        } />
+        <Route path="/contatos/:id" element={
+          <ProtectedRoute>
+            <ContatoDetalhes />
+          </ProtectedRoute>
+        } />
+        <Route path="/contatos/:id/editar" element={
+          <ProtectedRoute>
+            <ContatoEditar />
+          </ProtectedRoute>
+        } />
+        <Route path="/etiquetas" element={
+          <ProtectedRoute>
+            <Etiquetas />
+          </ProtectedRoute>
+        } />
+        <Route path="/agenda" element={
+          <ProtectedRoute>
+            <Agenda />
+          </ProtectedRoute>
+        } />
+        <Route path="/agenda/v2/novo" element={
+          <ProtectedRoute>
+            <AgendaFormV2 />
+          </ProtectedRoute>
+        } />
+        <Route path="/agenda/v2/:id" element={
+          <ProtectedRoute>
+            <AgendaFormV2 />
+          </ProtectedRoute>
+        } />
+        <Route path="/agenda/config" element={
+          <ProtectedRoute>
+            <AgendaConfig />
+          </ProtectedRoute>
+        } />
+        <Route path="/configuracoes" element={
+          <ProtectedRoute>
+            <Configuracoes />
+          </ProtectedRoute>
+        } />
+        <Route path="/financeiro" element={
+          <ProtectedRoute>
+            <Financeiro />
+          </ProtectedRoute>
+        } />
+        <Route path="/financeiro/contas" element={
+          <ProtectedRoute>
+            <ContasFinanceiras />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos" element={
+          <ProtectedRoute>
+            <Processos />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/funil" element={
+          <ProtectedRoute>
+            <FunilAtendimento />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/captura" element={
+          <ProtectedRoute>
+            <ProcessoCaptura />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/novo" element={
+          <ProtectedRoute>
+            <ProcessoForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/:id/editar" element={
+          <ProtectedRoute>
+            <ProcessoForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/:id" element={
+          <ProtectedRoute>
+            <ProcessoDetalhes />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/configuracoes" element={
+          <ProtectedRoute>
+            <ProcessoConfiguracoes />
+          </ProtectedRoute>
+        } />
+        <Route path="/processos/configuracoes" element={
+          <ProtectedRoute>
+            <ProcessoConfig />
+          </ProtectedRoute>
+        } />
+        <Route path="/whatsapp" element={
+          <ProtectedRoute>
+            <WhatsAppMenu />
+          </ProtectedRoute>
+        } />
+        <Route path="/telefonia" element={
+          <ProtectedRoute>
+            <Telefonia />
+          </ProtectedRoute>
+        } />
+        {/* WhatsApp Evolution removido - usando sistema novo */}
+        <Route path="/biblioteca/*" element={
+          <ProtectedRoute>
+            <Biblioteca />
+          </ProtectedRoute>
+        } />
 
-            {/* Email Routes */}
-            <Route path="/emails" element={
-              <ProtectedRoute>
-                <AppLayout><EmailConfiguracoes /></AppLayout>
-              </ProtectedRoute>
-            } />
-            <Route path="/emails/configuracoes" element={
-              <ProtectedRoute>
-                <AppLayout><EmailConfiguracoes /></AppLayout>
-              </ProtectedRoute>
-            } />
-            <Route path="/emails/triggers" element={
-              <ProtectedRoute>
-                <AppLayout><EmailTriggers /></AppLayout>
-              </ProtectedRoute>
-            } />
-            <Route path="/emails/logs" element={
-              <ProtectedRoute>
-                <AppLayout><EmailLogs /></AppLayout>
-              </ProtectedRoute>
-            } />
+        {/* Email Routes */}
+        <Route path="/emails" element={
+          <ProtectedRoute>
+            <AppLayout><EmailConfiguracoes /></AppLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/emails/configuracoes" element={
+          <ProtectedRoute>
+            <AppLayout><EmailConfiguracoes /></AppLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/emails/triggers" element={
+          <ProtectedRoute>
+            <AppLayout><EmailTriggers /></AppLayout>
+          </ProtectedRoute>
+        } />
+        <Route path="/emails/logs" element={
+          <ProtectedRoute>
+            <AppLayout><EmailLogs /></AppLayout>
+          </ProtectedRoute>
+        } />
 
-            <Route path="/saas" element={
-              <ProtectedRoute>
-                <Saas />
-              </ProtectedRoute>
-            } />
+        <Route path="/saas" element={
+          <ProtectedRoute>
+            <Saas />
+          </ProtectedRoute>
+        } />
 
-            {/* SaaS Core Routes */}
-            <Route path="/admin/saas" element={
-              <ProtectedRoute>
-                <SaasDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/saas/empresas" element={
-              <ProtectedRoute>
-                <SaasEmpresas />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/saas/configuracoes" element={
-              <ProtectedRoute>
-                <SaasConfiguracoes />
-              </ProtectedRoute>
-            } />
+        {/* SaaS Core Routes */}
+        <Route path="/admin/saas" element={
+          <ProtectedRoute>
+            <SaasDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/saas/empresas" element={
+          <ProtectedRoute>
+            <SaasEmpresas />
+          </ProtectedRoute>
+        } />
+        <Route path="/admin/saas/configuracoes" element={
+          <ProtectedRoute>
+            <SaasConfiguracoes />
+          </ProtectedRoute>
+        } />
 
-            {/* Integração Judiciária Routes */}
-            <Route path="/integracao" element={
-              <ProtectedRoute>
-                <Integracao />
-              </ProtectedRoute>
-            } />
-            <Route path="/integracao/configuracoes" element={
-              <ProtectedRoute>
-                <IntegracaoConfiguracoes />
-              </ProtectedRoute>
-            } />
-            <Route path="/integracao/fila" element={
-              <ProtectedRoute>
-                <IntegracaoFila />
-              </ProtectedRoute>
-            } />
+        {/* Integração Judiciária Routes */}
+        <Route path="/integracao" element={
+          <ProtectedRoute>
+            <Integracao />
+          </ProtectedRoute>
+        } />
+        <Route path="/integracao/configuracoes" element={
+          <ProtectedRoute>
+            <IntegracaoConfiguracoes />
+          </ProtectedRoute>
+        } />
+        <Route path="/integracao/fila" element={
+          <ProtectedRoute>
+            <IntegracaoFila />
+          </ProtectedRoute>
+        } />
 
-            {/* Compras e Estoque Routes */}
-            <Route path="/compras" element={
-              <ProtectedRoute>
-                <Compras />
-              </ProtectedRoute>
-            } />
-            <Route path="/compras/nova" element={
-              <ProtectedRoute>
-                <CompraForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/compras/:id" element={
-              <ProtectedRoute>
-                <CompraDetalhes />
-              </ProtectedRoute>
-            } />
-            <Route path="/produtos" element={
-              <ProtectedRoute>
-                <Produtos />
-              </ProtectedRoute>
-            } />
-            <Route path="/estoque" element={
-              <ProtectedRoute>
-                <Estoque />
-              </ProtectedRoute>
-            } />
-            <Route path="/vendas" element={
-              <ProtectedRoute>
-                <Vendas />
-              </ProtectedRoute>
-            } />
-            <Route path="/vendas/nova" element={
-              <ProtectedRoute>
-                <VendaForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/vendas/:id" element={
-              <ProtectedRoute>
-                <VendaDetalhes />
-              </ProtectedRoute>
-            } />
-            <Route path="/relatorios/compras" element={
-              <ProtectedRoute>
-                <RelatoriosCompras />
-              </ProtectedRoute>
-            } />
-            <Route path="/relatorios/estoque" element={
-              <ProtectedRoute>
-                <RelatoriosEstoque />
-              </ProtectedRoute>
-            } />
+        {/* Compras e Estoque Routes */}
+        <Route path="/compras" element={
+          <ProtectedRoute>
+            <Compras />
+          </ProtectedRoute>
+        } />
+        <Route path="/compras/nova" element={
+          <ProtectedRoute>
+            <CompraForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/compras/:id" element={
+          <ProtectedRoute>
+            <CompraDetalhes />
+          </ProtectedRoute>
+        } />
+        <Route path="/produtos" element={
+          <ProtectedRoute>
+            <Produtos />
+          </ProtectedRoute>
+        } />
+        <Route path="/estoque" element={
+          <ProtectedRoute>
+            <Estoque />
+          </ProtectedRoute>
+        } />
+        <Route path="/vendas" element={
+          <ProtectedRoute>
+            <Vendas />
+          </ProtectedRoute>
+        } />
+        <Route path="/vendas/nova" element={
+          <ProtectedRoute>
+            <VendaForm />
+          </ProtectedRoute>
+        } />
+        <Route path="/vendas/:id" element={
+          <ProtectedRoute>
+            <VendaDetalhes />
+          </ProtectedRoute>
+        } />
+        <Route path="/relatorios/compras" element={
+          <ProtectedRoute>
+            <RelatoriosCompras />
+          </ProtectedRoute>
+        } />
+        <Route path="/relatorios/estoque" element={
+          <ProtectedRoute>
+            <RelatoriosEstoque />
+          </ProtectedRoute>
+        } />
 
-            <Route path="/atendimento" element={
-              <ProtectedRoute>
-                <XavierConnectPage />
-              </ProtectedRoute>
-            } />
+        <Route path="/atendimento" element={
+          <ProtectedRoute>
+            <XavierConnectPage />
+          </ProtectedRoute>
+        } />
 
-            <Route path="/atendimento/whatsapp" element={
-              <ProtectedRoute>
-                <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Carregando atendimento WhatsApp...</div>}>
-                  <WhatsAppAtendimento />
-                </Suspense>
-              </ProtectedRoute>
-            } />
+        <Route path="/atendimento/whatsapp" element={
+          <ProtectedRoute>
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Carregando atendimento WhatsApp...</div>}>
+              <WhatsAppAtendimento />
+            </Suspense>
+          </ProtectedRoute>
+        } />
 
-            <Route path="/ajuda" element={
-              <ProtectedRoute>
-                <Ajuda />
-              </ProtectedRoute>
-            } />
-            
-            {/* Admin SaaS Routes */}
-            <Route path="/admin/saas/dashboard" element={<ProtectedRoute><SaasDashboard /></ProtectedRoute>} />
-            <Route path="/admin/saas/empresas" element={<ProtectedRoute><SaasEmpresas /></ProtectedRoute>} />
-            <Route path="/admin/saas/usuarios" element={<ProtectedRoute requiredRole="admin"><SaasUsuarios /></ProtectedRoute>} />
-            <Route path="/admin/saas/configuracoes" element={<ProtectedRoute><SaasConfiguracoes /></ProtectedRoute>} />
-            
+        <Route path="/ajuda" element={
+          <ProtectedRoute>
+            <Ajuda />
+          </ProtectedRoute>
+        } />
+
+        {/* Admin SaaS Routes */}
+        <Route path="/admin/saas/dashboard" element={<ProtectedRoute><SaasDashboard /></ProtectedRoute>} />
+        <Route path="/admin/saas/empresas" element={<ProtectedRoute><SaasEmpresas /></ProtectedRoute>} />
+        <Route path="/admin/saas/usuarios" element={<ProtectedRoute requiredRole="admin"><SaasUsuarios /></ProtectedRoute>} />
+        <Route path="/admin/saas/configuracoes" element={<ProtectedRoute><SaasConfiguracoes /></ProtectedRoute>} />
+
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -366,14 +364,16 @@ const AppWithRouter = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
-      {FEATURES.DEBUG_PANEL && <DebugPanel />}
-    </TooltipProvider>
+    <BrowserRouter>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+        {FEATURES.DEBUG_PANEL && <DebugPanel />}
+      </TooltipProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext, ReactNode, startTransition } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { logAuthAttempt } from '@/lib/securityMonitor';
@@ -14,6 +15,7 @@ interface Profile {
   role: 'admin' | 'user';
   empresa_id?: string;  // UUID
   filial_id?: string;   // UUID
+  eh_primeiro_acesso?: boolean;
   sip_ramal?: string;
   sip_senha?: string;
   sip_host?: string;
@@ -41,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Enhanced security monitoring
   const [sessionManager, setSessionManager] = useState<SessionSecurityManager | null>(null);
@@ -52,15 +55,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .select('*')
         .eq('user_id', userId)
         .maybeSingle();
-      
+
       if (error && error.code !== 'PGRST116') {
         console.error('Error fetching profile:', error);
         throw error;
       }
-      
+
       // Profile data will be set even if empresa/filial are not configured yet
       // The Auth page will handle redirecting to wizard if needed
-      
+
       startTransition(() => {
         setProfile(data);
       });
@@ -79,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         startTransition(() => {
           setSession(session);
           setUser(session?.user ?? null);
-          
+
           if (session?.user) {
             setTimeout(() => {
               fetchProfile(session.user.id);
@@ -87,7 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           } else {
             setProfile(null);
           }
-          
+
           setLoading(false);
         });
       }
@@ -98,11 +101,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       startTransition(() => {
         setSession(session);
         setUser(session?.user ?? null);
-        
+
         if (session?.user) {
           fetchProfile(session.user.id);
         }
-        
+
         setLoading(false);
       });
     });
@@ -115,18 +118,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!user || !profile || loading) return;
 
     const currentPath = window.location.pathname;
-    
+
     // Se está marcado para primeiro acesso E não está na página de configuração
-    if ((profile as any).eh_primeiro_acesso === true && currentPath !== '/configuracao-inicial') {
+    if (profile.eh_primeiro_acesso === true && currentPath !== '/configuracao-inicial') {
       console.log('Primeiro acesso detectado, redirecionando para /configuracao-inicial...');
-      window.location.href = '/configuracao-inicial';
+      navigate('/configuracao-inicial', { replace: true });
     }
     // Se está na página de config mas já configurou, redireciona para home
-    else if ((profile as any).eh_primeiro_acesso === false && currentPath === '/configuracao-inicial') {
+    else if (profile.eh_primeiro_acesso === false && currentPath === '/configuracao-inicial') {
       console.log('Usuário já configurado, redirecionando para /...');
-      window.location.href = '/';
+      navigate('/', { replace: true });
     }
-  }, [user, profile, loading]);
+  }, [user, profile, loading, navigate]);
 
   // Enhanced security monitoring with session management
   useEffect(() => {
@@ -163,7 +166,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       const result = await authSecurity.secureSignIn(email, password);
-      
+
       if (!result.success) {
         return { error: new Error(result.error || 'Sign in failed') };
       }
@@ -178,7 +181,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const userData = { nome, celular };
       const result = await authSecurity.secureSignUp(email, password, userData);
-      
+
       if (!result.success) {
         return { error: new Error(result.error || 'Sign up failed'), user: null };
       }
@@ -198,7 +201,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (sessionManager) {
         sessionManager.forceExpire();
       }
-      
+
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     } catch (error) {
@@ -209,12 +212,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const resetPassword = async (email: string) => {
     try {
       const { logAuthAttempt } = await import('@/lib/securityMonitor');
-      
+
       // Log password reset attempt
       await logAuthAttempt('password_reset_attempt', email);
-      
+
       const redirectUrl = `${window.location.origin}/redefinir-senha`;
-      
+
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: redirectUrl,
       });

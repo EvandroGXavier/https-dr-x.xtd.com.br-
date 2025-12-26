@@ -68,9 +68,8 @@ export default function WhatsAppTab() {
   };
 
   const getWebhookUrl = () => {
-    // Extrai o project ID dinamicamente do cliente Supabase
-    const projectId = 'dr-x.xtd.com.br'; // Temporário até implementar extração dinâmica
-    return `https://${projectId}.supabase.co/functions/v1/wa-evolution-webhook`;
+    // URL correta para o ambiente VPS
+    return `https://api.dr-x.xtd.com.br/functions/v1/wa-evolution-webhook`;
   };
 
   const copyToClipboard = (text: string) => {
@@ -152,9 +151,9 @@ export default function WhatsAppTab() {
         setConnectionStatus('disconnected');
         return;
       }
-      
+
       console.log('🔍 Testing connection for instance:', formData.instance_name);
-      
+
       // Use a função 'test-whatsapp-connection' com os dados do formulário
       const { data, error } = await supabase.functions.invoke('test-whatsapp-connection', {
         body: {
@@ -274,14 +273,13 @@ export default function WhatsAppTab() {
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`w-3 h-3 rounded-full ${
-                connectionStatus === 'connected' ? 'bg-green-500' :
-                connectionStatus === 'connecting' ? 'bg-yellow-500' : 'bg-red-500'
-              }`} />
+              <div className={`w-3 h-3 rounded-full ${connectionStatus === 'connected' ? 'bg-green-500' :
+                  connectionStatus === 'connecting' ? 'bg-yellow-500' : 'bg-red-500'
+                }`} />
               <div>
                 <p className="font-medium">
                   {connectionStatus === 'connected' ? 'Conectado' :
-                   connectionStatus === 'connecting' ? 'Conectando...' : 'Desconectado'}
+                    connectionStatus === 'connecting' ? 'Conectando...' : 'Desconectado'}
                 </p>
                 {config?.instance_name && (
                   <p className="text-sm text-muted-foreground">
@@ -342,7 +340,7 @@ export default function WhatsAppTab() {
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="api_key">Chave da API</Label>
             <Input
@@ -382,8 +380,8 @@ export default function WhatsAppTab() {
             <Button onClick={handleSave} disabled={loading} className="flex-1">
               {loading ? 'Salvando...' : 'Salvar Configurações'}
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={refreshConnectionStatus}
               disabled={!formData.instance_name || !formData.api_endpoint || !formData.api_key}
               title="Testar conexão com Evolution API"
@@ -391,8 +389,8 @@ export default function WhatsAppTab() {
               <Activity className="w-4 h-4 mr-2" />
               Testar Conexão
             </Button>
-            <Button 
-              variant="secondary" 
+            <Button
+              variant="secondary"
               onClick={handleHealthcheck}
               title="Verificar status de todas as instâncias"
             >
@@ -428,7 +426,7 @@ export default function WhatsAppTab() {
               onCheckedChange={(checked) => handleFieldChange('ia_enabled', checked)}
             />
           </div>
-          
+
           {formData.ia_enabled && (
             <div className="space-y-2">
               <Label htmlFor="ia_api_key">Chave da API de IA</Label>
