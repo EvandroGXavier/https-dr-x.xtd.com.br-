@@ -346,12 +346,12 @@ const Auth = () => {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-1">
               <TabsTrigger value="login" className="flex items-center gap-2">
                 <LogIn className="h-4 w-4" />
                 Login
               </TabsTrigger>
-              <TabsTrigger value="signup" className="flex items-center gap-2">
+              <TabsTrigger value="signup" className="hidden">
                 <UserPlus className="h-4 w-4" />
                 Cadastro
               </TabsTrigger>
@@ -431,7 +431,7 @@ const Auth = () => {
               </form>
             </TabsContent>
 
-            <TabsContent value="signup">
+            <TabsContent value="signup" className="hidden">
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="signup-nome">Nome Completo</Label>
